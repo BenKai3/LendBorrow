@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RailsBeltPractice</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="pre_heading">
+</div>
+
+<div id="heading">
+	<h1><span class="lend_green">Lend</span>Borrow</h1>
+	<% if session[:user_id] %>
+		<a class="button" id="logout_button" href="/signout">Logout</a>
+	<% end %>
+</div>
+
+<%= yield %>
+
+</body>
+</html>

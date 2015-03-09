@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.table_info').hide();
+  $('#listing_lenders').hover(function(){
+    $('.table_info').slideDown();
+  });
+});
+</script>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @borrower.first_name+" "+@borrower.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @borrower.email %>
+</p>
+
+<p>
+  <strong>Initial asking:</strong>
+  $<%= @borrower.money %>
+</p>
+
+<p>
+  <strong>Purpose:</strong>
+  <%= @borrower.purpose %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @borrower.description %>
+</p>
+
+<p>
+  <strong>Money Raised:</strong>
+  $<%= @borrower.raised %>
+</p>
+
+<h1 class="button" id="listing_lenders">Listing Lenders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Money Lent</th>
+    </tr>
+  </thead>
+
+  <tbody class="table_info">
+    <% @history.each do |history| %>
+      <tr>
+        <td><%= history.lender.first_name+" "+history.lender.last_name %></td>
+        <td><%= history.lender.email %></td>
+        <td>$<%= history.amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

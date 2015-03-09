@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#in_need_info').hide();
+  $('#lent_to_info').hide();
+  $('#borrowers_in_need').hover(function(){
+    $('#in_need_info').slideDown();
+  });
+  $('#borrowers_lent_to').hover(function(){
+    $('#lent_to_info').slideDown();
+  });
+});
+</script>
+<p id="notice"><%= notice %></p>
+<div id="user_info">
+  <p>
+    <strong>Name:</strong>
+    <%= @lender1.first_name+" "+@lender1.last_name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= @lender1.email %>
+  </p>
+
+  <p>
+    <strong>Account Amount:</strong>
+    $<%= @lender1.money %>
+  </p>
+
+  <p>
+    <strong>Created at:</strong>
+    <%= @lender1.created_at %>
+  </p>
+
+  <p>
+    <strong>Updated at:</strong>
+    <%= @lender1.updated_at %>
+  </p>
+</div>
+
+<h1 class="button" id="borrowers_in_need">Borrowers that need help:</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Money Goal</th>
+      <th>Purpose</th>
+      <th>Description</th>
+      <th>Raised</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody id="in_need_info">
+    <% @borrowers.each do |borrower| %>
+      <tr>
+        <td><%= borrower.first_name+" "+borrower.last_name %></td>
+        <td><%= borrower.email %></td>
+        <td>$<%= borrower.money %></td>
+        <td><%= borrower.purpose %></td>
+        <td><%= borrower.description %></td>
+        <td>$<%= borrower.raised %></td>
+        <td><%= borrower.created_at %></td>
+        <td><%= borrower.updated_at %></td>
+        <td>
+          <form action="/lenders/<%= borrower.id %>/lend" method="post">
+            $<input type="number" name="lend">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input class="button" type="submit" value="Lend">
+          </form><%=  %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1 class="button" id="borrowers_lent_to">Borrowers that you lent to:</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Need Money for</th>
+      <th>Reason for Loan</th>
+      <th>Email</th>
+      <th>Amount Needed</th>
+      <th>I gave</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody id="lent_to_info">
+    <% @history_lent_to.each do |history| %>
+      <tr>
+        <td><%= history.borrower.first_name+" "+history.borrower.last_name %></td>
+        <td><%= history.borrower.purpose %></td>
+        <td><%= history.borrower.description %></td>
+        <td><%= history.borrower.email %></td>
+        <td>$<%= history.borrower.money %></td>
+        <td>$<%= history.amount %></td>
+        <td>$<%= history.created_at %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
